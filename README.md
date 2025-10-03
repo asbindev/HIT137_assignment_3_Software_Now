@@ -1,4 +1,11 @@
 # HIT137 Assignment 3 - Group Project
+
+## Team Members
+- Asbin Dulal
+- Sansuwa Shrestha
+- Qyush Shrestha
+- Beenu Regmi
+  
 ## What this package contains
 - `main.py` - entrypoint that launches the GUI
 - `gui.py` - Tkinter GUI code

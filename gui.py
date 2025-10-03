@@ -11,6 +11,66 @@ class AppGUI:
         self.root = tk.Tk()
         self.root.title('HIT137 - Assignment 3 (Group)')
         self.root.geometry('900x700')
+        self.create_widgets()
+
+
+    def create_widgets(self):
+        # Top frame: Input selection
+        top = ttk.Frame(self.root, padding=10)
+        top.pack(fill='x')
+
+        ttk.Label(top, text='Select Input Type:').grid(row=0, column=0, sticky='w')
+        self.input_type = tk.StringVar(value='text')
+        ttk.Combobox(top, textvariable=self.input_type, values=['text', 'image'], state='readonly').grid(row=0, column=1, sticky='w')
+
+        ttk.Label(top, text='Enter Text / Choose Image:').grid(row=1, column=0, sticky='w', pady=(8,0))
+        self.input_text = tk.Text(top, height=4, width=60)
+        self.input_text.grid(row=2, column=0, columnspan=3, sticky='w')
+
+        self.choose_img_btn = ttk.Button(top, text='Select Image...', command=self.select_image)
+        self.choose_img_btn.grid(row=1, column=1, sticky='w', padx=(6,0))
+
+        # Model selection
+        ttk.Label(top, text='Select Model:').grid(row=3, column=0, sticky='w', pady=(12,0))
+        self.model_var = tk.StringVar(value='text-generation')
+        ttk.Combobox(top, textvariable=self.model_var, values=['text-generation (gpt2)', 'image-classification (google/vit-base-patch16-224)'], state='readonly').grid(row=3, column=1, sticky='w')
+
+        # Run button
+        self.run_btn = ttk.Button(top, text='Run Model', command=self.run_model_thread)
+        self.run_btn.grid(row=3, column=2, sticky='e', padx=(10,0))
+
+        # Output frame
+        out_frame = ttk.LabelFrame(self.root, text='Model Output', padding=10)
+        out_frame.pack(fill='both', expand=True, padx=10, pady=10)
+
+        self.output_text = tk.Text(out_frame, height=12)
+        self.output_text.pack(fill='both', expand=True)
+
+        # Right frame: image preview + OOP explanation + model info
+        right_frame = ttk.Frame(self.root, padding=10)
+        right_frame.pack(fill='x')
+
+        # Image preview
+        self.preview_label = ttk.Label(right_frame, text='No image selected', anchor='center')
+        self.preview_label.pack(fill='both')
+
+        # Tabs for OOP and Model Info
+        tabs = ttk.Notebook(self.root)
+        tabs.pack(fill='both', expand=True, padx=10, pady=10)
+
+        self.oop_tab = ttk.Frame(tabs)
+        self.model_info_tab = ttk.Frame(tabs)
+
+        tabs.add(self.oop_tab, text='OOP Explanation')
+        tabs.add(self.model_info_tab, text='Model Info')
+
+        self.oop_text = tk.Text(self.oop_tab, wrap='word')
+        self.oop_text.pack(fill='both', expand=True)
+        self.oop_text.insert('1.0', self.oop_demo.explain_all())
+
+        self.model_info_text = tk.Text(self.model_info_tab, wrap='word')
+        self.model_info_text.pack(fill='both', expand=True)
+        self.model_info_text.insert('1.0', self.model_manager.get_models_info())
 
        #selecting image for image classification
 
